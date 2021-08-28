@@ -182,6 +182,7 @@ int LossMetric<NET, MATRIX_ELEMENT, ELEMENT, ROW, COLUMN, LABEL_MATRIX_ELEMENT, 
                                                                                                               const int file_name_length,
                                                                                                               std::string** error_message)
 {
+#ifndef DLIB_NOT_SUPPORT_DNN_TRAINING
     int error = ERR_OK;
 
     try
@@ -196,6 +197,9 @@ int LossMetric<NET, MATRIX_ELEMENT, ELEMENT, ROW, COLUMN, LABEL_MATRIX_ELEMENT, 
     }
 
     return error;
+#else
+    return ERR_DNN_NOT_SUPPORT;
+#endif
 }
 
 template<typename NET, matrix_element_type MATRIX_ELEMENT, typename ELEMENT, int ROW, int COLUMN, matrix_element_type LABEL_MATRIX_ELEMENT, typename LABEL_ELEMENT, int ID>
@@ -203,6 +207,7 @@ int LossMetric<NET, MATRIX_ELEMENT, ELEMENT, ROW, COLUMN, LABEL_MATRIX_ELEMENT, 
                                                                                                                     void* obj,
                                                                                                                     std::string** error_message)
 {
+#ifndef DLIB_NOT_SUPPORT_DNN_TRAINING
     int error = ERR_OK;
 
     try
@@ -222,6 +227,9 @@ int LossMetric<NET, MATRIX_ELEMENT, ELEMENT, ROW, COLUMN, LABEL_MATRIX_ELEMENT, 
     }
 
     return error;
+#else
+    return ERR_DNN_NOT_SUPPORT;
+#endif
 }
 
 template<typename NET, matrix_element_type MATRIX_ELEMENT, typename ELEMENT, int ROW, int COLUMN, matrix_element_type LABEL_MATRIX_ELEMENT, typename LABEL_ELEMENT, int ID>
@@ -233,32 +241,42 @@ int LossMetric<NET, MATRIX_ELEMENT, ELEMENT, ROW, COLUMN, LABEL_MATRIX_ELEMENT, 
 template<typename NET, matrix_element_type MATRIX_ELEMENT, typename ELEMENT, int ROW, int COLUMN, matrix_element_type LABEL_MATRIX_ELEMENT, typename LABEL_ELEMENT, int ID>
 void LossMetric<NET, MATRIX_ELEMENT, ELEMENT, ROW, COLUMN, LABEL_MATRIX_ELEMENT, LABEL_ELEMENT, ID>::layer_details_set_num_filters(void* layer, long num)
 {
+#ifndef DLIB_NOT_SUPPORT_DNN_TRAINING
     auto ld = static_cast<typename NET::subnet_type::layer_details_type*>(layer);
     // ToDo: some network does not support
     // ld->set_num_filters(num);
+#endif
 }
 
 template<typename NET, matrix_element_type MATRIX_ELEMENT, typename ELEMENT, int ROW, int COLUMN, matrix_element_type LABEL_MATRIX_ELEMENT, typename LABEL_ELEMENT, int ID>
 void LossMetric<NET, MATRIX_ELEMENT, ELEMENT, ROW, COLUMN, LABEL_MATRIX_ELEMENT, LABEL_ELEMENT, ID>::get_subnet(void* obj, void** subnet)
 {
+#ifndef DLIB_NOT_SUPPORT_DNN_TRAINING
     auto net = static_cast<NET*>(obj);
     typename NET::subnet_type& sn = net->subnet();
     *subnet = &sn;
+#endif
 }
 
 template<typename NET, matrix_element_type MATRIX_ELEMENT, typename ELEMENT, int ROW, int COLUMN, matrix_element_type LABEL_MATRIX_ELEMENT, typename LABEL_ELEMENT, int ID>
 void* LossMetric<NET, MATRIX_ELEMENT, ELEMENT, ROW, COLUMN, LABEL_MATRIX_ELEMENT, LABEL_ELEMENT, ID>::subnet_get_layer_details(void* subnet)
 {
+#ifndef DLIB_NOT_SUPPORT_DNN_TRAINING
     auto net = static_cast<typename NET::subnet_type*>(subnet);
     typename NET::subnet_type::layer_details_type& layer_details = net->layer_details();
     return &layer_details;
+#else
+    return nullptr;
+#endif
 }
 
 template<typename NET, matrix_element_type MATRIX_ELEMENT, typename ELEMENT, int ROW, int COLUMN, matrix_element_type LABEL_MATRIX_ELEMENT, typename LABEL_ELEMENT, int ID>
 void LossMetric<NET, MATRIX_ELEMENT, ELEMENT, ROW, COLUMN, LABEL_MATRIX_ELEMENT, LABEL_ELEMENT, ID>::clean(void* obj)
 {
+#ifndef DLIB_NOT_SUPPORT_DNN_TRAINING
     auto net = static_cast<NET*>(obj);
     net->clean();
+#endif
 }
 
 template<typename NET, matrix_element_type MATRIX_ELEMENT, typename ELEMENT, int ROW, int COLUMN, matrix_element_type LABEL_MATRIX_ELEMENT, typename LABEL_ELEMENT, int ID>
@@ -274,112 +292,146 @@ void LossMetric<NET, MATRIX_ELEMENT, ELEMENT, ROW, COLUMN, LABEL_MATRIX_ELEMENT,
 template<typename NET, matrix_element_type MATRIX_ELEMENT, typename ELEMENT, int ROW, int COLUMN, matrix_element_type LABEL_MATRIX_ELEMENT, typename LABEL_ELEMENT, int ID>
 void LossMetric<NET, MATRIX_ELEMENT, ELEMENT, ROW, COLUMN, LABEL_MATRIX_ELEMENT, LABEL_ELEMENT, ID>::net_to_xml(void* obj, const char* filename, const int file_name_length)
 {
+#ifndef DLIB_NOT_SUPPORT_DNN_TRAINING
     std::string str(filename, file_name_length);
     auto& net = *static_cast<NET*>(obj);
     dlib::net_to_xml(net, str);
+#endif
 }
 
 template<typename NET, matrix_element_type MATRIX_ELEMENT, typename ELEMENT, int ROW, int COLUMN, matrix_element_type LABEL_MATRIX_ELEMENT, typename LABEL_ELEMENT, int ID>
 void LossMetric<NET, MATRIX_ELEMENT, ELEMENT, ROW, COLUMN, LABEL_MATRIX_ELEMENT, LABEL_ELEMENT, ID>::operator_left_shift(void* obj, std::ostringstream* stream)
 {
+#ifndef DLIB_NOT_SUPPORT_DNN_TRAINING
     auto& net = *(static_cast<NET*>(obj));
     *stream << net;
+#endif
 }
 
 template<typename NET, matrix_element_type MATRIX_ELEMENT, typename ELEMENT, int ROW, int COLUMN, matrix_element_type LABEL_MATRIX_ELEMENT, typename LABEL_ELEMENT, int ID>
 void LossMetric<NET, MATRIX_ELEMENT, ELEMENT, ROW, COLUMN, LABEL_MATRIX_ELEMENT, LABEL_ELEMENT, ID>::set_all_bn_running_stats_window_sizes(void* net,
                                                                                                                                            unsigned long new_window_size)
 {
+#ifndef DLIB_NOT_SUPPORT_DNN_TRAINING
     auto& n = *static_cast<NET*>(net);
     dlib::set_all_bn_running_stats_window_sizes(n, new_window_size);
+#endif
 }
 
 template<typename NET, matrix_element_type MATRIX_ELEMENT, typename ELEMENT, int ROW, int COLUMN, matrix_element_type LABEL_MATRIX_ELEMENT, typename LABEL_ELEMENT, int ID>
 void LossMetric<NET, MATRIX_ELEMENT, ELEMENT, ROW, COLUMN, LABEL_MATRIX_ELEMENT, LABEL_ELEMENT, ID>::get_loss_details(void* net,
                                                                                                                       void** loss_details)
 {
+#ifndef DLIB_NOT_SUPPORT_DNN_TRAINING
     auto n = static_cast<NET*>(net);
     typename NET::loss_details_type& ret = n->loss_details();
     *loss_details = &ret;
+#endif
 }
 
 template<typename NET, matrix_element_type MATRIX_ELEMENT, typename ELEMENT, int ROW, int COLUMN, matrix_element_type LABEL_MATRIX_ELEMENT, typename LABEL_ELEMENT, int ID>
 void LossMetric<NET, MATRIX_ELEMENT, ELEMENT, ROW, COLUMN, LABEL_MATRIX_ELEMENT, LABEL_ELEMENT, ID>::loss_details_get_distance_threshold(void* loss_details,
                                                                                                                                          float* distance_threshold)
 {
+#ifndef DLIB_NOT_SUPPORT_DNN_TRAINING
     auto ld = static_cast<typename NET::loss_details_type*>(loss_details);
     *distance_threshold = ld->get_distance_threshold();
+#endif
 }
 
 template<typename NET, matrix_element_type MATRIX_ELEMENT, typename ELEMENT, int ROW, int COLUMN, matrix_element_type LABEL_MATRIX_ELEMENT, typename LABEL_ELEMENT, int ID>
 void* LossMetric<NET, MATRIX_ELEMENT, ELEMENT, ROW, COLUMN, LABEL_MATRIX_ELEMENT, LABEL_ELEMENT, ID>::trainer_new(void* net)
 {
+#ifndef DLIB_NOT_SUPPORT_DNN_TRAINING
     auto& n = *static_cast<NET*>(net);
     return new dnn_trainer<NET>(n);
+#else
+    return nullptr;
+#endif
 }
 
 template<typename NET, matrix_element_type MATRIX_ELEMENT, typename ELEMENT, int ROW, int COLUMN, matrix_element_type LABEL_MATRIX_ELEMENT, typename LABEL_ELEMENT, int ID>
 void* LossMetric<NET, MATRIX_ELEMENT, ELEMENT, ROW, COLUMN, LABEL_MATRIX_ELEMENT, LABEL_ELEMENT, ID>::trainer_new_sgd(void* net, sgd* param)
 {
+#ifndef DLIB_NOT_SUPPORT_DNN_TRAINING
     auto& n = *static_cast<NET*>(net);
     auto& p = *static_cast<sgd*>(param);
     return new dnn_trainer<NET>(n, p);
+#else
+    return nullptr;
+#endif
 }
 
 template<typename NET, matrix_element_type MATRIX_ELEMENT, typename ELEMENT, int ROW, int COLUMN, matrix_element_type LABEL_MATRIX_ELEMENT, typename LABEL_ELEMENT, int ID>
 void LossMetric<NET, MATRIX_ELEMENT, ELEMENT, ROW, COLUMN, LABEL_MATRIX_ELEMENT, LABEL_ELEMENT, ID>::trainer_delete(void* trainer)
 {
+#ifndef DLIB_NOT_SUPPORT_DNN_TRAINING
     auto t = static_cast<dnn_trainer<NET>*>(trainer);
     delete t;
+#endif
 }
 
 template<typename NET, matrix_element_type MATRIX_ELEMENT, typename ELEMENT, int ROW, int COLUMN, matrix_element_type LABEL_MATRIX_ELEMENT, typename LABEL_ELEMENT, int ID>
 void LossMetric<NET, MATRIX_ELEMENT, ELEMENT, ROW, COLUMN, LABEL_MATRIX_ELEMENT, LABEL_ELEMENT, ID>::trainer_set_learning_rate(void* trainer, const double lr)
 {
+#ifndef DLIB_NOT_SUPPORT_DNN_TRAINING
     auto t = static_cast<dnn_trainer<NET>*>(trainer);
     t->set_learning_rate(lr);
+#endif
 }
 
 template<typename NET, matrix_element_type MATRIX_ELEMENT, typename ELEMENT, int ROW, int COLUMN, matrix_element_type LABEL_MATRIX_ELEMENT, typename LABEL_ELEMENT, int ID>
 void LossMetric<NET, MATRIX_ELEMENT, ELEMENT, ROW, COLUMN, LABEL_MATRIX_ELEMENT, LABEL_ELEMENT, ID>::trainer_get_learning_rate(void* trainer, double* lr)
 {
+#ifndef DLIB_NOT_SUPPORT_DNN_TRAINING
     auto t = static_cast<dnn_trainer<NET>*>(trainer);
     *lr = t->get_learning_rate();
+#endif
 }
 
 template<typename NET, matrix_element_type MATRIX_ELEMENT, typename ELEMENT, int ROW, int COLUMN, matrix_element_type LABEL_MATRIX_ELEMENT, typename LABEL_ELEMENT, int ID>
 void LossMetric<NET, MATRIX_ELEMENT, ELEMENT, ROW, COLUMN, LABEL_MATRIX_ELEMENT, LABEL_ELEMENT, ID>::trainer_get_average_loss(void* trainer, double* loss)
 {
+#ifndef DLIB_NOT_SUPPORT_DNN_TRAINING
     auto t = static_cast<dnn_trainer<NET>*>(trainer);
     *loss = t->get_average_loss();
+#endif
 }
 
 template<typename NET, matrix_element_type MATRIX_ELEMENT, typename ELEMENT, int ROW, int COLUMN, matrix_element_type LABEL_MATRIX_ELEMENT, typename LABEL_ELEMENT, int ID>
 void LossMetric<NET, MATRIX_ELEMENT, ELEMENT, ROW, COLUMN, LABEL_MATRIX_ELEMENT, LABEL_ELEMENT, ID>::trainer_get_average_test_loss(void* trainer, double* loss)
 {
+#ifndef DLIB_NOT_SUPPORT_DNN_TRAINING
     auto t = static_cast<dnn_trainer<NET>*>(trainer);
     *loss = t->get_average_test_loss();
+#endif
 }
 
 template<typename NET, matrix_element_type MATRIX_ELEMENT, typename ELEMENT, int ROW, int COLUMN, matrix_element_type LABEL_MATRIX_ELEMENT, typename LABEL_ELEMENT, int ID>
 void LossMetric<NET, MATRIX_ELEMENT, ELEMENT, ROW, COLUMN, LABEL_MATRIX_ELEMENT, LABEL_ELEMENT, ID>::trainer_set_min_learning_rate(void* trainer, const double lr)
 {
+#ifndef DLIB_NOT_SUPPORT_DNN_TRAINING
     auto t = static_cast<dnn_trainer<NET>*>(trainer);
     t->set_min_learning_rate(lr);
+#endif
 }
 
 template<typename NET, matrix_element_type MATRIX_ELEMENT, typename ELEMENT, int ROW, int COLUMN, matrix_element_type LABEL_MATRIX_ELEMENT, typename LABEL_ELEMENT, int ID>
 void LossMetric<NET, MATRIX_ELEMENT, ELEMENT, ROW, COLUMN, LABEL_MATRIX_ELEMENT, LABEL_ELEMENT, ID>::trainer_set_mini_batch_size(void* trainer, const unsigned long size)
 {
+#ifndef DLIB_NOT_SUPPORT_DNN_TRAINING
     auto t = static_cast<dnn_trainer<NET>*>(trainer);
     t->set_mini_batch_size(size);
+#endif
 }
 
 template<typename NET, matrix_element_type MATRIX_ELEMENT, typename ELEMENT, int ROW, int COLUMN, matrix_element_type LABEL_MATRIX_ELEMENT, typename LABEL_ELEMENT, int ID>
 void LossMetric<NET, MATRIX_ELEMENT, ELEMENT, ROW, COLUMN, LABEL_MATRIX_ELEMENT, LABEL_ELEMENT, ID>::trainer_be_verbose(void* trainer)
 {
+#ifndef DLIB_NOT_SUPPORT_DNN_TRAINING
     auto t = static_cast<dnn_trainer<NET>*>(trainer);
     t->be_verbose();
+#endif
 }
 
 template<typename NET, matrix_element_type MATRIX_ELEMENT, typename ELEMENT, int ROW, int COLUMN, matrix_element_type LABEL_MATRIX_ELEMENT, typename LABEL_ELEMENT, int ID>
@@ -388,57 +440,73 @@ void LossMetric<NET, MATRIX_ELEMENT, ELEMENT, ROW, COLUMN, LABEL_MATRIX_ELEMENT,
                                                                                                                                       const int filename_length,
                                                                                                                                       const unsigned long second)
 {
+#ifndef DLIB_NOT_SUPPORT_DNN_TRAINING
     auto t = static_cast<dnn_trainer<NET>*>(trainer);
     t->set_synchronization_file(std::string(filename, filename_length), std::chrono::seconds(second));
+#endif
 }
 
 template<typename NET, matrix_element_type MATRIX_ELEMENT, typename ELEMENT, int ROW, int COLUMN, matrix_element_type LABEL_MATRIX_ELEMENT, typename LABEL_ELEMENT, int ID>
 void LossMetric<NET, MATRIX_ELEMENT, ELEMENT, ROW, COLUMN, LABEL_MATRIX_ELEMENT, LABEL_ELEMENT, ID>::trainer_set_iterations_without_progress_threshold(void* trainer,
                                                                                                                                                        const unsigned long thresh)
 {
+#ifndef DLIB_NOT_SUPPORT_DNN_TRAINING
     auto t = static_cast<dnn_trainer<NET>*>(trainer);
     t->set_iterations_without_progress_threshold(thresh);
+#endif
 }
 
 template<typename NET, matrix_element_type MATRIX_ELEMENT, typename ELEMENT, int ROW, int COLUMN, matrix_element_type LABEL_MATRIX_ELEMENT, typename LABEL_ELEMENT, int ID>
 void LossMetric<NET, MATRIX_ELEMENT, ELEMENT, ROW, COLUMN, LABEL_MATRIX_ELEMENT, LABEL_ELEMENT, ID>::trainer_set_test_iterations_without_progress_threshold(void* trainer,
                                                                                                                                                                             const unsigned long thresh)
 {
+#ifndef DLIB_NOT_SUPPORT_DNN_TRAINING
     auto t = static_cast<dnn_trainer<NET>*>(trainer);
     t->set_test_iterations_without_progress_threshold(thresh);
+#endif
 }
 
 template<typename NET, matrix_element_type MATRIX_ELEMENT, typename ELEMENT, int ROW, int COLUMN, matrix_element_type LABEL_MATRIX_ELEMENT, typename LABEL_ELEMENT, int ID>
 void LossMetric<NET, MATRIX_ELEMENT, ELEMENT, ROW, COLUMN, LABEL_MATRIX_ELEMENT, LABEL_ELEMENT, ID>::trainer_get_net(void* trainer,
                                                                                                                      void** ret)
 {
+#ifndef DLIB_NOT_SUPPORT_DNN_TRAINING
     auto t = static_cast<dnn_trainer<NET>*>(trainer);
     *ret = &(t->get_net());
+#endif
 }
 
 template<typename NET, matrix_element_type MATRIX_ELEMENT, typename ELEMENT, int ROW, int COLUMN, matrix_element_type LABEL_MATRIX_ELEMENT, typename LABEL_ELEMENT, int ID>
 void LossMetric<NET, MATRIX_ELEMENT, ELEMENT, ROW, COLUMN, LABEL_MATRIX_ELEMENT, LABEL_ELEMENT, ID>::trainer_operator_left_shift(void* trainer,
                                                                                                                                  std::ostringstream* stream)
 {
+#ifndef DLIB_NOT_SUPPORT_DNN_TRAINING
     auto& t = *static_cast<dnn_trainer<NET>*>(trainer);
-    *stream << t;\
+    *stream << t;
+#endif
 }
 
 template<typename NET, matrix_element_type MATRIX_ELEMENT, typename ELEMENT, int ROW, int COLUMN, matrix_element_type LABEL_MATRIX_ELEMENT, typename LABEL_ELEMENT, int ID>
 void LossMetric<NET, MATRIX_ELEMENT, ELEMENT, ROW, COLUMN, LABEL_MATRIX_ELEMENT, LABEL_ELEMENT, ID>::subnet_delete(void* subnet)
 {
+#ifndef DLIB_NOT_SUPPORT_DNN_TRAINING
     auto sb = static_cast<typename NET::subnet_type*>(subnet);
     delete sb;
+#endif
 }
 
 template<typename NET, matrix_element_type MATRIX_ELEMENT, typename ELEMENT, int ROW, int COLUMN, matrix_element_type LABEL_MATRIX_ELEMENT, typename LABEL_ELEMENT, int ID>
 const dlib::tensor* LossMetric<NET, MATRIX_ELEMENT, ELEMENT, ROW, COLUMN, LABEL_MATRIX_ELEMENT, LABEL_ELEMENT, ID>::subnet_get_output(void* subnet,
                                                                                                                                       int* ret)
 {
+#ifndef DLIB_NOT_SUPPORT_DNN_TRAINING
     auto net = static_cast<typename NET::subnet_type*>(subnet);
     const dlib::tensor& tensor = net->get_output();
     *ret = ERR_OK;
     return &tensor;
+#else
+    return nullptr;
+#endif
 }
 
 template<typename NET, matrix_element_type MATRIX_ELEMENT, typename ELEMENT, int ROW, int COLUMN, matrix_element_type LABEL_MATRIX_ELEMENT, typename LABEL_ELEMENT, int ID>
@@ -448,12 +516,14 @@ void LossMetric<NET, MATRIX_ELEMENT, ELEMENT, ROW, COLUMN, LABEL_MATRIX_ELEMENT,
                                                                                                                            matrix_element_type label_element_type,
                                                                                                                            void* labels)
 {
+#ifndef DLIB_NOT_SUPPORT_DNN_TRAINING
     std::vector<dlib::matrix<ELEMENT, ROW, COLUMN>> out_data;
     std::vector<LABEL_ELEMENT> out_label;
     convert(data, labels, out_data, out_label);
 
     auto t = static_cast<dnn_trainer<NET>*>(trainer);
     t->test_one_step(out_data, out_label);
+#endif
 }
 
 template<typename NET, matrix_element_type MATRIX_ELEMENT, typename ELEMENT, int ROW, int COLUMN, matrix_element_type LABEL_MATRIX_ELEMENT, typename LABEL_ELEMENT, int ID>
@@ -463,12 +533,14 @@ void LossMetric<NET, MATRIX_ELEMENT, ELEMENT, ROW, COLUMN, LABEL_MATRIX_ELEMENT,
                                                                                                                    matrix_element_type label_element_type,
                                                                                                                    void* labels)
 {
+#ifndef DLIB_NOT_SUPPORT_DNN_TRAINING
     std::vector<dlib::matrix<ELEMENT, ROW, COLUMN>> out_data;
     std::vector<LABEL_ELEMENT> out_label;
     convert(data, labels, out_data, out_label);
 
     auto t = static_cast<dnn_trainer<NET>*>(trainer);
     t->train(out_data, out_label);
+#endif
 }
 
 template<typename NET, matrix_element_type MATRIX_ELEMENT, typename ELEMENT, int ROW, int COLUMN, matrix_element_type LABEL_MATRIX_ELEMENT, typename LABEL_ELEMENT, int ID>
@@ -478,12 +550,14 @@ void LossMetric<NET, MATRIX_ELEMENT, ELEMENT, ROW, COLUMN, LABEL_MATRIX_ELEMENT,
                                                                                                                             matrix_element_type label_element_type,
                                                                                                                             void* labels)
 {
+#ifndef DLIB_NOT_SUPPORT_DNN_TRAINING
     std::vector<dlib::matrix<ELEMENT, ROW, COLUMN>> out_data;
     std::vector<LABEL_ELEMENT> out_label;
     convert(data, labels, out_data, out_label);
 
     auto t = static_cast<dnn_trainer<NET>*>(trainer);
     t->train_one_step(out_data, out_label);
+#endif
 }
 
 #endif
