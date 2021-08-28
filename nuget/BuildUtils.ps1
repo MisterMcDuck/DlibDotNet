@@ -884,6 +884,11 @@ class Config
 
             foreach ($key in $buildHashTable.keys)
             {
+               if ($key.Contains("Lite"))
+               {
+                  continue
+               }
+
                $srcDir = Join-Path $sourceRoot $key
                $dll = $buildHashTable[$key]
 
@@ -1326,6 +1331,13 @@ function ConfigUWP([Config]$Config, [string]$CMakefileDir)
       git apply """${patchFullPath}"""
       Set-Location -Path $current
 
+      $liteFlag = "Off"
+      $libName = Split-Path ${CMakefileDir} -Leaf
+      if ($libName.Contains("Lite"))
+      {
+         $liteFlag = "On"
+      }
+
       $vs = $Config.GetVisualStudio()
       $vsarch = $Config.GetVisualStudioArchitecture()
 
@@ -1344,6 +1356,10 @@ function ConfigUWP([Config]$Config, [string]$CMakefileDir)
          -D DLIB_USE_BLAS=OFF `
          -D DLIB_USE_LAPACK=OFF `
          -D DLIB_NO_GUI_SUPPORT=ON `
+         -D DLIB_NOT_SUPPORT_DNN_TRAINING=${liteFlag} `
+         -D DLIB_NO_LOSSMMODSUPPORT=${liteFlag} `
+         -D DLIB_NO_LOSSMULTICLASSLOG_SUPPORT=${liteFlag} `
+         -D DLIB_NO_LOSSMULTICLASSLOGPERPIXEL_SUPPORT=${liteFlag} `
          ${CMakefileDir}" -ForegroundColor Yellow
          cmake -G "${vs}" -A $vsarch -T host=x64 `
                -D CMAKE_SYSTEM_NAME=WindowsStore `
@@ -1358,6 +1374,10 @@ function ConfigUWP([Config]$Config, [string]$CMakefileDir)
                -D DLIB_USE_BLAS=OFF `
                -D DLIB_USE_LAPACK=OFF `
                -D DLIB_NO_GUI_SUPPORT=ON `
+               -D DLIB_NOT_SUPPORT_DNN_TRAINING=${liteFlag} `
+               -D DLIB_NO_LOSSMMODSUPPORT=${liteFlag} `
+               -D DLIB_NO_LOSSMULTICLASSLOG_SUPPORT=${liteFlag} `
+               -D DLIB_NO_LOSSMULTICLASSLOGPERPIXEL_SUPPORT=${liteFlag} `
                ${CMakefileDir}
       }
       else
@@ -1379,6 +1399,10 @@ function ConfigUWP([Config]$Config, [string]$CMakefileDir)
          -D USE_AVX_INSTRUCTIONS=$USE_AVX_INSTRUCTIONS `
          -D USE_SSE4_INSTRUCTIONS=$USE_SSE4_INSTRUCTIONS `
          -D USE_SSE2_INSTRUCTIONS=$USE_SSE2_INSTRUCTIONS `
+         -D DLIB_NOT_SUPPORT_DNN_TRAINING=${liteFlag} `
+         -D DLIB_NO_LOSSMMODSUPPORT=${liteFlag} `
+         -D DLIB_NO_LOSSMULTICLASSLOG_SUPPORT=${liteFlag} `
+         -D DLIB_NO_LOSSMULTICLASSLOGPERPIXEL_SUPPORT=${liteFlag} `
          ${CMakefileDir}" -ForegroundColor Yellow
          cmake -G "${vs}" -A $vsarch -T host=x64 `
                -D CMAKE_SYSTEM_NAME=WindowsStore `
@@ -1393,6 +1417,10 @@ function ConfigUWP([Config]$Config, [string]$CMakefileDir)
                -D USE_AVX_INSTRUCTIONS=$USE_AVX_INSTRUCTIONS `
                -D USE_SSE4_INSTRUCTIONS=$USE_SSE4_INSTRUCTIONS `
                -D USE_SSE2_INSTRUCTIONS=$USE_SSE2_INSTRUCTIONS `
+               -D DLIB_NOT_SUPPORT_DNN_TRAINING=${liteFlag} `
+               -D DLIB_NO_LOSSMMODSUPPORT=${liteFlag} `
+               -D DLIB_NO_LOSSMULTICLASSLOG_SUPPORT=${liteFlag} `
+               -D DLIB_NO_LOSSMULTICLASSLOGPERPIXEL_SUPPORT=${liteFlag} `
                ${CMakefileDir}
       }
 
@@ -1415,6 +1443,14 @@ function ConfigANDROID([Config]$Config, [string]$CMakefileDir)
          exit -1
       }
 
+      $liteFlag = "Off"
+      $libName = Split-Path ${CMakefileDir} -Leaf
+      if ($libName.Contains("Lite"))
+      {
+         $liteFlag = "On"
+      }
+
+      $cofiguration = $Config.GetConfigurationName()
       $level = $Config.GetAndroidNativeAPILevel()
       $abi = $Config.GetAndroidABI()
 
@@ -1441,11 +1477,15 @@ function ConfigANDROID([Config]$Config, [string]$CMakefileDir)
       -D PNG_LIBRARY_DEBUG="" `
       -D PNG_PNG_INCLUDE_DIR="" `
       -D DLIB_NO_GUI_SUPPORT=ON `
+      -D DLIB_NOT_SUPPORT_DNN_TRAINING=${liteFlag} `
+      -D DLIB_NO_LOSSMMODSUPPORT=${liteFlag} `
+      -D DLIB_NO_LOSSMULTICLASSLOG_SUPPORT=${liteFlag} `
+      -D DLIB_NO_LOSSMULTICLASSLOGPERPIXEL_SUPPORT=${liteFlag} `
       ${CMakefileDir}" -ForegroundColor Yellow
          cmake -D CMAKE_TOOLCHAIN_FILE=${env:ANDROID_NDK}/build/cmake/android.toolchain.cmake `
+               -D CMAKE_BUILD_TYPE="${cofiguration}"  `
                -D ANDROID_ABI=$abi `
                -D ANDROID_PLATFORM=android-$level `
-               -D ANDROID_CPP_FEATURES:STRING="exceptions rtti" `
                -D BUILD_SHARED_LIBS=ON `
                -D DLIB_USE_CUDA=OFF `
                -D DLIB_USE_BLAS=OFF `
@@ -1461,6 +1501,10 @@ function ConfigANDROID([Config]$Config, [string]$CMakefileDir)
                -D PNG_LIBRARY_DEBUG="" `
                -D PNG_PNG_INCLUDE_DIR="" `
                -D DLIB_NO_GUI_SUPPORT=ON `
+               -D DLIB_NOT_SUPPORT_DNN_TRAINING=${liteFlag} `
+               -D DLIB_NO_LOSSMMODSUPPORT=${liteFlag} `
+               -D DLIB_NO_LOSSMULTICLASSLOG_SUPPORT=${liteFlag} `
+               -D DLIB_NO_LOSSMULTICLASSLOGPERPIXEL_SUPPORT=${liteFlag} `
                ${CMakefileDir}
    }
    else
@@ -1482,6 +1526,13 @@ function ConfigIOS([Config]$Config, [string]$CMakefileDir)
       $toolchain = $Config.GetToolchainFile()
 
       $OSX_SYSROOT = $Config.GetIOSSDK($osxArchitectures, $developerDir)
+
+      $liteFlag = "Off"
+      $libName = Split-Path ${CMakefileDir} -Leaf
+      if ($libName.Contains("Lite"))
+      {
+         $liteFlag = "On"
+      }
 
       # use libc++ rather than libstdc++
       Write-Host "   cmake -D CMAKE_SYSTEM_NAME=iOS `
@@ -1505,6 +1556,10 @@ function ConfigIOS([Config]$Config, [string]$CMakefileDir)
          -D PNG_LIBRARY_DEBUG=`"`" `
          -D PNG_PNG_INCLUDE_DIR=`"`" `
          -D DLIB_NO_GUI_SUPPORT=ON `
+         -D DLIB_NOT_SUPPORT_DNN_TRAINING=${liteFlag} `
+         -D DLIB_NO_LOSSMMODSUPPORT=${liteFlag} `
+         -D DLIB_NO_LOSSMULTICLASSLOG_SUPPORT=${liteFlag} `
+         -D DLIB_NO_LOSSMULTICLASSLOGPERPIXEL_SUPPORT=${liteFlag} `
          ${CMakefileDir}" -ForegroundColor Yellow
       cmake -D CMAKE_SYSTEM_NAME=iOS `
             -D CMAKE_OSX_ARCHITECTURES=${osxArchitectures} `
@@ -1527,6 +1582,10 @@ function ConfigIOS([Config]$Config, [string]$CMakefileDir)
             -D PNG_LIBRARY_DEBUG="" `
             -D PNG_PNG_INCLUDE_DIR="" `
             -D DLIB_NO_GUI_SUPPORT=ON `
+            -D DLIB_NOT_SUPPORT_DNN_TRAINING=${liteFlag} `
+            -D DLIB_NO_LOSSMMODSUPPORT=${liteFlag} `
+            -D DLIB_NO_LOSSMULTICLASSLOG_SUPPORT=${liteFlag} `
+            -D DLIB_NO_LOSSMULTICLASSLOGPERPIXEL_SUPPORT=${liteFlag} `
             ${CMakefileDir}
    }
    else
