@@ -1723,6 +1723,14 @@ function Build([Config]$Config)
    # current is each source directory
    $Current = Get-Location
 
+   $libName = Split-Path ${Current} -Leaf
+   $copyScript = Join-Path ${Current} "CopySource.ps1"
+   if ($libName.Contains("Lite") -and (Test-Path "${copyScript}"))
+   {
+      Write-Host "Invoke ${copyScript}" -ForegroundColor Yellow      
+      & "${copyScript}"
+   }
+
    $CMakefile = Join-Path $Current "CMakeLists.txt"
    if (!(Test-Path(${CMakefile})))
    {
@@ -1745,7 +1753,6 @@ function Build([Config]$Config)
 
    $Target = $Config.GetTarget()
    $Platform = $Config.GetPlatform()
-
 
    # revert dlib
    Reset-Dlib-Modification $Config (Join-Path $Current $Output)
