@@ -915,6 +915,13 @@ class Config
 
 function ConfigCPU([Config]$Config, [string]$CMakefileDir)
 {
+   $liteFlag = "Off"
+   $libName = Split-Path ${CMakefileDir} -Leaf
+   if ($libName.Contains("Lite"))
+   {
+      $liteFlag = "On"
+   }
+
    if ($global:IsWindows)
    {
       $USE_AVX_INSTRUCTIONS  = $Config.GetAVXINSTRUCTIONS()
@@ -964,6 +971,10 @@ function ConfigCPU([Config]$Config, [string]$CMakefileDir)
          -D USE_SSE4_INSTRUCTIONS=$USE_SSE4_INSTRUCTIONS `
          -D USE_SSE2_INSTRUCTIONS=$USE_SSE2_INSTRUCTIONS `
          -D JPEG_FOUND=OFF `
+         -D DLIB_NOT_SUPPORT_DNN_TRAINING=${liteFlag} `
+         -D DLIB_NO_LOSSMMODSUPPORT=${liteFlag} `
+         -D DLIB_NO_LOSSMULTICLASSLOG_SUPPORT=${liteFlag} `
+         -D DLIB_NO_LOSSMULTICLASSLOGPERPIXEL_SUPPORT=${liteFlag} `
          ${CMakefileDir}" -ForegroundColor Yellow
       cmake -D ARCH_TYPE="${arch_type}" `
             -D DLIB_USE_CUDA=OFF `
@@ -982,6 +993,10 @@ function ConfigCPU([Config]$Config, [string]$CMakefileDir)
             -D USE_SSE4_INSTRUCTIONS=$USE_SSE4_INSTRUCTIONS `
             -D USE_SSE2_INSTRUCTIONS=$USE_SSE2_INSTRUCTIONS `
             -D JPEG_FOUND=OFF `
+            -D DLIB_NOT_SUPPORT_DNN_TRAINING=${liteFlag} `
+            -D DLIB_NO_LOSSMMODSUPPORT=${liteFlag} `
+            -D DLIB_NO_LOSSMULTICLASSLOG_SUPPORT=${liteFlag} `
+            -D DLIB_NO_LOSSMULTICLASSLOGPERPIXEL_SUPPORT=${liteFlag} `
             ${CMakefileDir}
    }
    else
@@ -1007,6 +1022,10 @@ function ConfigCPU([Config]$Config, [string]$CMakefileDir)
          -D USE_AVX_INSTRUCTIONS=$USE_AVX_INSTRUCTIONS `
          -D USE_SSE4_INSTRUCTIONS=$USE_SSE4_INSTRUCTIONS `
          -D USE_SSE2_INSTRUCTIONS=$USE_SSE2_INSTRUCTIONS `
+         -D DLIB_NOT_SUPPORT_DNN_TRAINING=${liteFlag} `
+         -D DLIB_NO_LOSSMMODSUPPORT=${liteFlag} `
+         -D DLIB_NO_LOSSMULTICLASSLOG_SUPPORT=${liteFlag} `
+         -D DLIB_NO_LOSSMULTICLASSLOGPERPIXEL_SUPPORT=${liteFlag} `
          ${CMakefileDir}" -ForegroundColor Yellow
       cmake -D ARCH_TYPE="$arch_type" `
             -D DLIB_USE_CUDA=OFF `
@@ -1024,12 +1043,23 @@ function ConfigCPU([Config]$Config, [string]$CMakefileDir)
             -D USE_AVX_INSTRUCTIONS=$USE_AVX_INSTRUCTIONS `
             -D USE_SSE4_INSTRUCTIONS=$USE_SSE4_INSTRUCTIONS `
             -D USE_SSE2_INSTRUCTIONS=$USE_SSE2_INSTRUCTIONS `
+            -D DLIB_NOT_SUPPORT_DNN_TRAINING=${liteFlag} `
+            -D DLIB_NO_LOSSMMODSUPPORT=${liteFlag} `
+            -D DLIB_NO_LOSSMULTICLASSLOG_SUPPORT=${liteFlag} `
+            -D DLIB_NO_LOSSMULTICLASSLOGPERPIXEL_SUPPORT=${liteFlag} `
             ${CMakefileDir}
    }
 }
 
 function ConfigCUDA([Config]$Config, [string]$CMakefileDir)
 {
+   $liteFlag = "Off"
+   $libName = Split-Path ${CMakefileDir} -Leaf
+   if ($libName.Contains("Lite"))
+   {
+      $liteFlag = "On"
+   }
+
    if ($global:IsWindows)
    {
       $cudaPath = $Config.GetCUDAPath()
@@ -1058,6 +1088,10 @@ function ConfigCUDA([Config]$Config, [string]$CMakefileDir)
          -D USE_SSE4_INSTRUCTIONS=$USE_SSE4_INSTRUCTIONS `
          -D USE_SSE2_INSTRUCTIONS=$USE_SSE2_INSTRUCTIONS `
          -D CUDA_NVCC_FLAGS=`"--expt-relaxed-constexpr`" `
+         -D DLIB_NOT_SUPPORT_DNN_TRAINING=${liteFlag} `
+         -D DLIB_NO_LOSSMMODSUPPORT=${liteFlag} `
+         -D DLIB_NO_LOSSMULTICLASSLOG_SUPPORT=${liteFlag} `
+         -D DLIB_NO_LOSSMULTICLASSLOGPERPIXEL_SUPPORT=${liteFlag} `
          ${CMakefileDir}" -ForegroundColor Yellow
       cmake -G "${vs}" -A $vsarch -T host=x64 `
             -D DLIB_USE_CUDA=ON `
@@ -1067,6 +1101,10 @@ function ConfigCUDA([Config]$Config, [string]$CMakefileDir)
             -D USE_SSE4_INSTRUCTIONS=$USE_SSE4_INSTRUCTIONS `
             -D USE_SSE2_INSTRUCTIONS=$USE_SSE2_INSTRUCTIONS `
             -D CUDA_NVCC_FLAGS="--expt-relaxed-constexpr" `
+            -D DLIB_NOT_SUPPORT_DNN_TRAINING=${liteFlag} `
+            -D DLIB_NO_LOSSMMODSUPPORT=${liteFlag} `
+            -D DLIB_NO_LOSSMULTICLASSLOG_SUPPORT=${liteFlag} `
+            -D DLIB_NO_LOSSMULTICLASSLOGPERPIXEL_SUPPORT=${liteFlag} `
             ${CMakefileDir}
    }
    else
@@ -1087,6 +1125,10 @@ function ConfigCUDA([Config]$Config, [string]$CMakefileDir)
          -D USE_SSE4_INSTRUCTIONS=$USE_SSE4_INSTRUCTIONS `
          -D USE_SSE2_INSTRUCTIONS=$USE_SSE2_INSTRUCTIONS `
          -D CUDA_NVCC_FLAGS=`"--expt-relaxed-constexpr`" `
+         -D DLIB_NOT_SUPPORT_DNN_TRAINING=${liteFlag} `
+         -D DLIB_NO_LOSSMMODSUPPORT=${liteFlag} `
+         -D DLIB_NO_LOSSMULTICLASSLOG_SUPPORT=${liteFlag} `
+         -D DLIB_NO_LOSSMULTICLASSLOGPERPIXEL_SUPPORT=${liteFlag} `
          ${CMakefileDir}" -ForegroundColor Yellow
       cmake -D DLIB_USE_CUDA=ON `
             -D DLIB_USE_BLAS=OFF `
@@ -1100,12 +1142,23 @@ function ConfigCUDA([Config]$Config, [string]$CMakefileDir)
             -D USE_SSE4_INSTRUCTIONS=$USE_SSE4_INSTRUCTIONS `
             -D USE_SSE2_INSTRUCTIONS=$USE_SSE2_INSTRUCTIONS `
             -D CUDA_NVCC_FLAGS="--expt-relaxed-constexpr" `
+            -D DLIB_NOT_SUPPORT_DNN_TRAINING=${liteFlag} `
+            -D DLIB_NO_LOSSMMODSUPPORT=${liteFlag} `
+            -D DLIB_NO_LOSSMULTICLASSLOG_SUPPORT=${liteFlag} `
+            -D DLIB_NO_LOSSMULTICLASSLOGPERPIXEL_SUPPORT=${liteFlag} `
             ${CMakefileDir}
    }
 }
 
 function ConfigMKL([Config]$Config, [string]$CMakefileDir)
 {
+   $liteFlag = "Off"
+   $libName = Split-Path ${CMakefileDir} -Leaf
+   if ($libName.Contains("Lite"))
+   {
+      $liteFlag = "On"
+   }
+
    if ($global:IsWindows)
    {
       $intelMklDirectory = $Config.GetIntelMklDirectory()
@@ -1168,6 +1221,10 @@ function ConfigMKL([Config]$Config, [string]$CMakefileDir)
          -D USE_AVX_INSTRUCTIONS=$USE_AVX_INSTRUCTIONS `
          -D USE_SSE4_INSTRUCTIONS=$USE_SSE4_INSTRUCTIONS `
          -D USE_SSE2_INSTRUCTIONS=$USE_SSE2_INSTRUCTIONS `
+         -D DLIB_NOT_SUPPORT_DNN_TRAINING=${liteFlag} `
+         -D DLIB_NO_LOSSMMODSUPPORT=${liteFlag} `
+         -D DLIB_NO_LOSSMULTICLASSLOG_SUPPORT=${liteFlag} `
+         -D DLIB_NO_LOSSMULTICLASSLOGPERPIXEL_SUPPORT=${liteFlag} `
          ${CMakefileDir}" -ForegroundColor Yellow
             cmake -G "${vs}" -A $vsarch -T host=x64 `
                   -D DLIB_USE_CUDA=OFF `
@@ -1181,6 +1238,10 @@ function ConfigMKL([Config]$Config, [string]$CMakefileDir)
                   -D USE_AVX_INSTRUCTIONS=$USE_AVX_INSTRUCTIONS `
                   -D USE_SSE4_INSTRUCTIONS=$USE_SSE4_INSTRUCTIONS `
                   -D USE_SSE2_INSTRUCTIONS=$USE_SSE2_INSTRUCTIONS `
+                  -D DLIB_NOT_SUPPORT_DNN_TRAINING=${liteFlag} `
+                  -D DLIB_NO_LOSSMMODSUPPORT=${liteFlag} `
+                  -D DLIB_NO_LOSSMULTICLASSLOG_SUPPORT=${liteFlag} `
+                  -D DLIB_NO_LOSSMULTICLASSLOGPERPIXEL_SUPPORT=${liteFlag} `
                   ${CMakefileDir}
          }
          64
@@ -1228,6 +1289,10 @@ function ConfigMKL([Config]$Config, [string]$CMakefileDir)
          -D USE_AVX_INSTRUCTIONS=$USE_AVX_INSTRUCTIONS `
          -D USE_SSE4_INSTRUCTIONS=$USE_SSE4_INSTRUCTIONS `
          -D USE_SSE2_INSTRUCTIONS=$USE_SSE2_INSTRUCTIONS `
+         -D DLIB_NOT_SUPPORT_DNN_TRAINING=${liteFlag} `
+         -D DLIB_NO_LOSSMMODSUPPORT=${liteFlag} `
+         -D DLIB_NO_LOSSMULTICLASSLOG_SUPPORT=${liteFlag} `
+         -D DLIB_NO_LOSSMULTICLASSLOGPERPIXEL_SUPPORT=${liteFlag} `
          ${CMakefileDir}" -ForegroundColor Yellow
             cmake -G "${vs}" -A $vsarch -T host=x64 `
                   -D DLIB_USE_CUDA=OFF `
@@ -1241,6 +1306,10 @@ function ConfigMKL([Config]$Config, [string]$CMakefileDir)
                   -D USE_AVX_INSTRUCTIONS=$USE_AVX_INSTRUCTIONS `
                   -D USE_SSE4_INSTRUCTIONS=$USE_SSE4_INSTRUCTIONS `
                   -D USE_SSE2_INSTRUCTIONS=$USE_SSE2_INSTRUCTIONS `
+                  -D DLIB_NOT_SUPPORT_DNN_TRAINING=${liteFlag} `
+                  -D DLIB_NO_LOSSMMODSUPPORT=${liteFlag} `
+                  -D DLIB_NO_LOSSMULTICLASSLOG_SUPPORT=${liteFlag} `
+                  -D DLIB_NO_LOSSMULTICLASSLOGPERPIXEL_SUPPORT=${liteFlag} `
                   ${CMakefileDir}
          }
       }
@@ -1264,6 +1333,10 @@ function ConfigMKL([Config]$Config, [string]$CMakefileDir)
          -D USE_AVX_INSTRUCTIONS=$USE_AVX_INSTRUCTIONS `
          -D USE_SSE4_INSTRUCTIONS=$USE_SSE4_INSTRUCTIONS `
          -D USE_SSE2_INSTRUCTIONS=$USE_SSE2_INSTRUCTIONS `
+         -D DLIB_NOT_SUPPORT_DNN_TRAINING=${liteFlag} `
+         -D DLIB_NO_LOSSMMODSUPPORT=${liteFlag} `
+         -D DLIB_NO_LOSSMULTICLASSLOG_SUPPORT=${liteFlag} `
+         -D DLIB_NO_LOSSMULTICLASSLOGPERPIXEL_SUPPORT=${liteFlag} `
          ${CMakefileDir}" -ForegroundColor Yellow
       cmake -D ARCH_TYPE="$arch_type" `
             -D DLIB_USE_CUDA=OFF `
@@ -1277,6 +1350,10 @@ function ConfigMKL([Config]$Config, [string]$CMakefileDir)
             -D USE_AVX_INSTRUCTIONS=$USE_AVX_INSTRUCTIONS `
             -D USE_SSE4_INSTRUCTIONS=$USE_SSE4_INSTRUCTIONS `
             -D USE_SSE2_INSTRUCTIONS=$USE_SSE2_INSTRUCTIONS `
+            -D DLIB_NOT_SUPPORT_DNN_TRAINING=${liteFlag} `
+            -D DLIB_NO_LOSSMMODSUPPORT=${liteFlag} `
+            -D DLIB_NO_LOSSMULTICLASSLOG_SUPPORT=${liteFlag} `
+            -D DLIB_NO_LOSSMULTICLASSLOGPERPIXEL_SUPPORT=${liteFlag} `
             ${CMakefileDir}
    }
 }
