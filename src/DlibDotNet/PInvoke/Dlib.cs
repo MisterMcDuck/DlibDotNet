@@ -1,4 +1,3 @@
-#if !LITE
 using System;
 using System.Runtime.InteropServices;
 using uint8_t = System.Byte;
@@ -666,4 +665,3 @@ namespace DlibDotNet
     }
 
 }
-#endif

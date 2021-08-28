@@ -1,4 +1,3 @@
-#if !LITE
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -249,6 +248,7 @@ namespace DlibDotNet.Dnn
             }
         }
 
+#if !LITE
         public static void TestOneStep<T>(DnnTrainer<LossMetric> trainer, IEnumerable<Matrix<T>> data, IEnumerable<uint> label)
             where T : struct
         {
@@ -371,6 +371,7 @@ namespace DlibDotNet.Dnn
                 }
             }
         }
+#endif
 
         public override bool TryGetInputLayer<T>(T layer)
         {
@@ -696,4 +697,3 @@ namespace DlibDotNet.Dnn
     }
 
 }
-#endif

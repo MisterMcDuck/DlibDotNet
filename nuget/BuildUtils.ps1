@@ -1009,7 +1009,6 @@ function ConfigCPU([Config]$Config, [string]$CMakefileDir)
          -D USE_SSE2_INSTRUCTIONS=$USE_SSE2_INSTRUCTIONS `
          -D JPEG_FOUND=OFF `
          -D DLIB_NOT_SUPPORT_DNN_TRAINING=${liteFlag} `
-         -D DLIB_NO_LOSSMMODSUPPORT=${liteFlag} `
          -D DLIB_NO_LOSSMULTICLASSLOG_SUPPORT=${liteFlag} `
          -D DLIB_NO_LOSSMULTICLASSLOGPERPIXEL_SUPPORT=${liteFlag} `
          ${CMakefileDir}" -ForegroundColor Yellow
@@ -1031,7 +1030,6 @@ function ConfigCPU([Config]$Config, [string]$CMakefileDir)
             -D USE_SSE2_INSTRUCTIONS=$USE_SSE2_INSTRUCTIONS `
             -D JPEG_FOUND=OFF `
             -D DLIB_NOT_SUPPORT_DNN_TRAINING=${liteFlag} `
-            -D DLIB_NO_LOSSMMODSUPPORT=${liteFlag} `
             -D DLIB_NO_LOSSMULTICLASSLOG_SUPPORT=${liteFlag} `
             -D DLIB_NO_LOSSMULTICLASSLOGPERPIXEL_SUPPORT=${liteFlag} `
             ${CMakefileDir}
@@ -1060,7 +1058,6 @@ function ConfigCPU([Config]$Config, [string]$CMakefileDir)
          -D USE_SSE4_INSTRUCTIONS=$USE_SSE4_INSTRUCTIONS `
          -D USE_SSE2_INSTRUCTIONS=$USE_SSE2_INSTRUCTIONS `
          -D DLIB_NOT_SUPPORT_DNN_TRAINING=${liteFlag} `
-         -D DLIB_NO_LOSSMMODSUPPORT=${liteFlag} `
          -D DLIB_NO_LOSSMULTICLASSLOG_SUPPORT=${liteFlag} `
          -D DLIB_NO_LOSSMULTICLASSLOGPERPIXEL_SUPPORT=${liteFlag} `
          ${CMakefileDir}" -ForegroundColor Yellow
@@ -1081,7 +1078,6 @@ function ConfigCPU([Config]$Config, [string]$CMakefileDir)
             -D USE_SSE4_INSTRUCTIONS=$USE_SSE4_INSTRUCTIONS `
             -D USE_SSE2_INSTRUCTIONS=$USE_SSE2_INSTRUCTIONS `
             -D DLIB_NOT_SUPPORT_DNN_TRAINING=${liteFlag} `
-            -D DLIB_NO_LOSSMMODSUPPORT=${liteFlag} `
             -D DLIB_NO_LOSSMULTICLASSLOG_SUPPORT=${liteFlag} `
             -D DLIB_NO_LOSSMULTICLASSLOGPERPIXEL_SUPPORT=${liteFlag} `
             ${CMakefileDir}
@@ -1126,7 +1122,6 @@ function ConfigCUDA([Config]$Config, [string]$CMakefileDir)
          -D USE_SSE2_INSTRUCTIONS=$USE_SSE2_INSTRUCTIONS `
          -D CUDA_NVCC_FLAGS=`"--expt-relaxed-constexpr`" `
          -D DLIB_NOT_SUPPORT_DNN_TRAINING=${liteFlag} `
-         -D DLIB_NO_LOSSMMODSUPPORT=${liteFlag} `
          -D DLIB_NO_LOSSMULTICLASSLOG_SUPPORT=${liteFlag} `
          -D DLIB_NO_LOSSMULTICLASSLOGPERPIXEL_SUPPORT=${liteFlag} `
          ${CMakefileDir}" -ForegroundColor Yellow
@@ -1139,7 +1134,6 @@ function ConfigCUDA([Config]$Config, [string]$CMakefileDir)
             -D USE_SSE2_INSTRUCTIONS=$USE_SSE2_INSTRUCTIONS `
             -D CUDA_NVCC_FLAGS="--expt-relaxed-constexpr" `
             -D DLIB_NOT_SUPPORT_DNN_TRAINING=${liteFlag} `
-            -D DLIB_NO_LOSSMMODSUPPORT=${liteFlag} `
             -D DLIB_NO_LOSSMULTICLASSLOG_SUPPORT=${liteFlag} `
             -D DLIB_NO_LOSSMULTICLASSLOGPERPIXEL_SUPPORT=${liteFlag} `
             ${CMakefileDir}
@@ -1163,7 +1157,6 @@ function ConfigCUDA([Config]$Config, [string]$CMakefileDir)
          -D USE_SSE2_INSTRUCTIONS=$USE_SSE2_INSTRUCTIONS `
          -D CUDA_NVCC_FLAGS=`"--expt-relaxed-constexpr`" `
          -D DLIB_NOT_SUPPORT_DNN_TRAINING=${liteFlag} `
-         -D DLIB_NO_LOSSMMODSUPPORT=${liteFlag} `
          -D DLIB_NO_LOSSMULTICLASSLOG_SUPPORT=${liteFlag} `
          -D DLIB_NO_LOSSMULTICLASSLOGPERPIXEL_SUPPORT=${liteFlag} `
          ${CMakefileDir}" -ForegroundColor Yellow
@@ -1180,7 +1173,6 @@ function ConfigCUDA([Config]$Config, [string]$CMakefileDir)
             -D USE_SSE2_INSTRUCTIONS=$USE_SSE2_INSTRUCTIONS `
             -D CUDA_NVCC_FLAGS="--expt-relaxed-constexpr" `
             -D DLIB_NOT_SUPPORT_DNN_TRAINING=${liteFlag} `
-            -D DLIB_NO_LOSSMMODSUPPORT=${liteFlag} `
             -D DLIB_NO_LOSSMULTICLASSLOG_SUPPORT=${liteFlag} `
             -D DLIB_NO_LOSSMULTICLASSLOGPERPIXEL_SUPPORT=${liteFlag} `
             ${CMakefileDir}
@@ -1259,7 +1251,6 @@ function ConfigMKL([Config]$Config, [string]$CMakefileDir)
          -D USE_SSE4_INSTRUCTIONS=$USE_SSE4_INSTRUCTIONS `
          -D USE_SSE2_INSTRUCTIONS=$USE_SSE2_INSTRUCTIONS `
          -D DLIB_NOT_SUPPORT_DNN_TRAINING=${liteFlag} `
-         -D DLIB_NO_LOSSMMODSUPPORT=${liteFlag} `
          -D DLIB_NO_LOSSMULTICLASSLOG_SUPPORT=${liteFlag} `
          -D DLIB_NO_LOSSMULTICLASSLOGPERPIXEL_SUPPORT=${liteFlag} `
          ${CMakefileDir}" -ForegroundColor Yellow
@@ -1276,7 +1267,6 @@ function ConfigMKL([Config]$Config, [string]$CMakefileDir)
                   -D USE_SSE4_INSTRUCTIONS=$USE_SSE4_INSTRUCTIONS `
                   -D USE_SSE2_INSTRUCTIONS=$USE_SSE2_INSTRUCTIONS `
                   -D DLIB_NOT_SUPPORT_DNN_TRAINING=${liteFlag} `
-                  -D DLIB_NO_LOSSMMODSUPPORT=${liteFlag} `
                   -D DLIB_NO_LOSSMULTICLASSLOG_SUPPORT=${liteFlag} `
                   -D DLIB_NO_LOSSMULTICLASSLOGPERPIXEL_SUPPORT=${liteFlag} `
                   ${CMakefileDir}
@@ -1327,7 +1317,6 @@ function ConfigMKL([Config]$Config, [string]$CMakefileDir)
          -D USE_SSE4_INSTRUCTIONS=$USE_SSE4_INSTRUCTIONS `
          -D USE_SSE2_INSTRUCTIONS=$USE_SSE2_INSTRUCTIONS `
          -D DLIB_NOT_SUPPORT_DNN_TRAINING=${liteFlag} `
-         -D DLIB_NO_LOSSMMODSUPPORT=${liteFlag} `
          -D DLIB_NO_LOSSMULTICLASSLOG_SUPPORT=${liteFlag} `
          -D DLIB_NO_LOSSMULTICLASSLOGPERPIXEL_SUPPORT=${liteFlag} `
          ${CMakefileDir}" -ForegroundColor Yellow
@@ -1344,7 +1333,6 @@ function ConfigMKL([Config]$Config, [string]$CMakefileDir)
                   -D USE_SSE4_INSTRUCTIONS=$USE_SSE4_INSTRUCTIONS `
                   -D USE_SSE2_INSTRUCTIONS=$USE_SSE2_INSTRUCTIONS `
                   -D DLIB_NOT_SUPPORT_DNN_TRAINING=${liteFlag} `
-                  -D DLIB_NO_LOSSMMODSUPPORT=${liteFlag} `
                   -D DLIB_NO_LOSSMULTICLASSLOG_SUPPORT=${liteFlag} `
                   -D DLIB_NO_LOSSMULTICLASSLOGPERPIXEL_SUPPORT=${liteFlag} `
                   ${CMakefileDir}
@@ -1371,7 +1359,6 @@ function ConfigMKL([Config]$Config, [string]$CMakefileDir)
          -D USE_SSE4_INSTRUCTIONS=$USE_SSE4_INSTRUCTIONS `
          -D USE_SSE2_INSTRUCTIONS=$USE_SSE2_INSTRUCTIONS `
          -D DLIB_NOT_SUPPORT_DNN_TRAINING=${liteFlag} `
-         -D DLIB_NO_LOSSMMODSUPPORT=${liteFlag} `
          -D DLIB_NO_LOSSMULTICLASSLOG_SUPPORT=${liteFlag} `
          -D DLIB_NO_LOSSMULTICLASSLOGPERPIXEL_SUPPORT=${liteFlag} `
          ${CMakefileDir}" -ForegroundColor Yellow
@@ -1388,7 +1375,6 @@ function ConfigMKL([Config]$Config, [string]$CMakefileDir)
             -D USE_SSE4_INSTRUCTIONS=$USE_SSE4_INSTRUCTIONS `
             -D USE_SSE2_INSTRUCTIONS=$USE_SSE2_INSTRUCTIONS `
             -D DLIB_NOT_SUPPORT_DNN_TRAINING=${liteFlag} `
-            -D DLIB_NO_LOSSMMODSUPPORT=${liteFlag} `
             -D DLIB_NO_LOSSMULTICLASSLOG_SUPPORT=${liteFlag} `
             -D DLIB_NO_LOSSMULTICLASSLOGPERPIXEL_SUPPORT=${liteFlag} `
             ${CMakefileDir}
@@ -1471,7 +1457,6 @@ function ConfigUWP([Config]$Config, [string]$CMakefileDir)
          -D DLIB_USE_LAPACK=OFF `
          -D DLIB_NO_GUI_SUPPORT=ON `
          -D DLIB_NOT_SUPPORT_DNN_TRAINING=${liteFlag} `
-         -D DLIB_NO_LOSSMMODSUPPORT=${liteFlag} `
          -D DLIB_NO_LOSSMULTICLASSLOG_SUPPORT=${liteFlag} `
          -D DLIB_NO_LOSSMULTICLASSLOGPERPIXEL_SUPPORT=${liteFlag} `
          ${CMakefileDir}" -ForegroundColor Yellow
@@ -1489,7 +1474,6 @@ function ConfigUWP([Config]$Config, [string]$CMakefileDir)
                -D DLIB_USE_LAPACK=OFF `
                -D DLIB_NO_GUI_SUPPORT=ON `
                -D DLIB_NOT_SUPPORT_DNN_TRAINING=${liteFlag} `
-               -D DLIB_NO_LOSSMMODSUPPORT=${liteFlag} `
                -D DLIB_NO_LOSSMULTICLASSLOG_SUPPORT=${liteFlag} `
                -D DLIB_NO_LOSSMULTICLASSLOGPERPIXEL_SUPPORT=${liteFlag} `
                ${CMakefileDir}
@@ -1514,7 +1498,6 @@ function ConfigUWP([Config]$Config, [string]$CMakefileDir)
          -D USE_SSE4_INSTRUCTIONS=$USE_SSE4_INSTRUCTIONS `
          -D USE_SSE2_INSTRUCTIONS=$USE_SSE2_INSTRUCTIONS `
          -D DLIB_NOT_SUPPORT_DNN_TRAINING=${liteFlag} `
-         -D DLIB_NO_LOSSMMODSUPPORT=${liteFlag} `
          -D DLIB_NO_LOSSMULTICLASSLOG_SUPPORT=${liteFlag} `
          -D DLIB_NO_LOSSMULTICLASSLOGPERPIXEL_SUPPORT=${liteFlag} `
          ${CMakefileDir}" -ForegroundColor Yellow
@@ -1532,7 +1515,6 @@ function ConfigUWP([Config]$Config, [string]$CMakefileDir)
                -D USE_SSE4_INSTRUCTIONS=$USE_SSE4_INSTRUCTIONS `
                -D USE_SSE2_INSTRUCTIONS=$USE_SSE2_INSTRUCTIONS `
                -D DLIB_NOT_SUPPORT_DNN_TRAINING=${liteFlag} `
-               -D DLIB_NO_LOSSMMODSUPPORT=${liteFlag} `
                -D DLIB_NO_LOSSMULTICLASSLOG_SUPPORT=${liteFlag} `
                -D DLIB_NO_LOSSMULTICLASSLOGPERPIXEL_SUPPORT=${liteFlag} `
                ${CMakefileDir}
@@ -1592,7 +1574,6 @@ function ConfigANDROID([Config]$Config, [string]$CMakefileDir)
       -D PNG_PNG_INCLUDE_DIR="" `
       -D DLIB_NO_GUI_SUPPORT=ON `
       -D DLIB_NOT_SUPPORT_DNN_TRAINING=${liteFlag} `
-      -D DLIB_NO_LOSSMMODSUPPORT=${liteFlag} `
       -D DLIB_NO_LOSSMULTICLASSLOG_SUPPORT=${liteFlag} `
       -D DLIB_NO_LOSSMULTICLASSLOGPERPIXEL_SUPPORT=${liteFlag} `
       ${CMakefileDir}" -ForegroundColor Yellow
@@ -1616,7 +1597,6 @@ function ConfigANDROID([Config]$Config, [string]$CMakefileDir)
                -D PNG_PNG_INCLUDE_DIR="" `
                -D DLIB_NO_GUI_SUPPORT=ON `
                -D DLIB_NOT_SUPPORT_DNN_TRAINING=${liteFlag} `
-               -D DLIB_NO_LOSSMMODSUPPORT=${liteFlag} `
                -D DLIB_NO_LOSSMULTICLASSLOG_SUPPORT=${liteFlag} `
                -D DLIB_NO_LOSSMULTICLASSLOGPERPIXEL_SUPPORT=${liteFlag} `
                ${CMakefileDir}
@@ -1671,7 +1651,6 @@ function ConfigIOS([Config]$Config, [string]$CMakefileDir)
          -D PNG_PNG_INCLUDE_DIR=`"`" `
          -D DLIB_NO_GUI_SUPPORT=ON `
          -D DLIB_NOT_SUPPORT_DNN_TRAINING=${liteFlag} `
-         -D DLIB_NO_LOSSMMODSUPPORT=${liteFlag} `
          -D DLIB_NO_LOSSMULTICLASSLOG_SUPPORT=${liteFlag} `
          -D DLIB_NO_LOSSMULTICLASSLOGPERPIXEL_SUPPORT=${liteFlag} `
          ${CMakefileDir}" -ForegroundColor Yellow
@@ -1697,7 +1676,6 @@ function ConfigIOS([Config]$Config, [string]$CMakefileDir)
             -D PNG_PNG_INCLUDE_DIR="" `
             -D DLIB_NO_GUI_SUPPORT=ON `
             -D DLIB_NOT_SUPPORT_DNN_TRAINING=${liteFlag} `
-            -D DLIB_NO_LOSSMMODSUPPORT=${liteFlag} `
             -D DLIB_NO_LOSSMULTICLASSLOG_SUPPORT=${liteFlag} `
             -D DLIB_NO_LOSSMULTICLASSLOGPERPIXEL_SUPPORT=${liteFlag} `
             ${CMakefileDir}
